@@ -1,5 +1,4 @@
 .ionide/
 bin/
-data/
 obj/
 .env

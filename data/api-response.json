@@ -1,0 +1,88 @@
+[
+  {
+    "data": [
+      {
+        "id": "id",
+        "caption": "caption",
+        "media_type": "CAROUSEL_ALBUM",
+        "media_url": "full_url",
+        "children": {
+          "data": [
+              {
+                  "media_url": "full_url",
+                  "media_type": "IMAGE",
+                  "id": "id"
+              }
+          ]
+      }
+      }
+    ],
+    "paging": {
+      "cursors": {
+        "before": "hash",
+        "after": "hash"
+      },
+      "next": "full_url"
+    }
+  },
+  {
+    "data": [
+      {
+        "id": "id",
+        "caption": "caption",
+        "media_type": "IMAGE",
+        "media_url": "full_url"
+      }
+    ],
+    "paging": {
+      "cursors": {
+        "before": "hash",
+        "after": "hash"
+      },
+      "next": "full_url"
+    }
+  },
+  {
+    "data": [
+      {
+        "id": "id",
+        "caption": "caption",
+        "media_type": "IMAGE",
+        "media_url": "full_url"
+      }
+    ],
+    "paging": {
+      "cursors": {
+        "before": "hash",
+        "after": "hash"
+      },
+      "previous": "full_url"
+    }
+  },
+  {
+    "data": [
+      {
+        "id": "id",
+        "caption": "caption",
+        "media_type": "CAROUSEL_ALBUM",
+        "media_url": "full_url",
+        "children": {
+          "data": [
+              {
+                  "media_url": "full_url",
+                  "media_type": "IMAGE",
+                  "id": "id"
+              }
+          ]
+      }
+      }
+    ],
+    "paging": {
+      "cursors": {
+        "before": "hash",
+        "after": "hash"
+      },
+      "previous": "full_url"
+    }
+  }
+]
