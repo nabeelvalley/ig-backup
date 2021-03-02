@@ -48,8 +48,20 @@ let rec getAllPosts (url: string) =
 
 let getUserPosts (accessToken: string) =
     async {
+        let fields =
+            [ "id"
+              "caption"
+              "media_type"
+              "media_url"
+              "id"
+              "children"
+              "children.media_url"
+              "children.media_type" ]
+
         let url =
-            "https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,id,children,children.media_url,children.media_type&limit=100&access_token="
+            "https://graph.instagram.com/me/media?limit=100&fields="
+            + String.Join(',', fields)
+            + "&access_token="
             + accessToken
 
         let! posts = getAllPosts url
@@ -67,11 +79,12 @@ let downloadImage (url: string) (path: string) =
         let! response = client.GetAsync url |> Async.AwaitTask
 
         response.EnsureSuccessStatusCode() |> ignore
-        
-        let! bytes = response.Content.ReadAsByteArrayAsync() |> Async.AwaitTask
 
-        if File.Exists(path) 
-        then 
+        let! bytes =
+            response.Content.ReadAsByteArrayAsync()
+            |> Async.AwaitTask
+
+        if File.Exists(path) then
             File.Delete path
 
         File.WriteAllBytesAsync(path, bytes) |> ignore
