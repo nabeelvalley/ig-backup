@@ -31,15 +31,11 @@ let getStringAsync (url: string) =
 
 let rec getAllPosts (url: string) =
     async {
-        let! responseContent = getStringAsync url
-
-        let instagramData = ApiResponse.Parse responseContent
+        let! instagramData = ApiResponse.AsyncLoad url
 
         match instagramData.Paging.Next with
         | Some s ->
-            let! nextContent = getStringAsync s
-
-            let nextData = ApiResponse.Parse nextContent
+            let! nextData = ApiResponse.AsyncLoad s
 
             return Array.append instagramData.Data nextData.Data
 
@@ -122,17 +118,17 @@ let main argv =
     let accessToken =
         Environment.GetEnvironmentVariable "IG_ACCESS_TOKEN"
 
-    let posts =
-        getUserPosts accessToken
-        |> Async.RunSynchronously
-        |> Array.map (convertResponseDatumToPost "./out")
+    async {
+        let! postData = getUserPosts accessToken
 
-    let json = Json.serialize posts
-    File.WriteAllText("./out/posts.json", json)
+        let posts =
+            Array.map (convertResponseDatumToPost "./out") postData
 
-    downloadAllPosts posts
-    |> Async.Parallel
+        let json = Json.serialize posts
+        File.WriteAllText("./out/posts.json", json)
+
+        downloadAllPosts posts |> Async.Parallel |> ignore
+
+        return 0
+    }
     |> Async.RunSynchronously
-    |> ignore
-
-    0 // return an integer exit code
